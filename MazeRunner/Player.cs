@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MazeRunner
 {
-    class Player
+    public class Player
     {
         public int x, y, width, height, speed, health;
         public string direction;
@@ -21,7 +22,7 @@ namespace MazeRunner
             health = _health;
         }
 
-        public void Move(string direction, int speed)
+        public void Move(int speed, string direction)
         {
             // player moving along x axis
             if (direction == "left")
@@ -42,6 +43,47 @@ namespace MazeRunner
             {
                 y += speed;
             }
+        }
+
+        public bool WallCollision(Wall w)
+        {
+            Rectangle wallRec = new Rectangle(w.x, w.y, w.width, w.height);
+            Rectangle playerRec = new Rectangle(x, y, width, height);
+
+            if (playerRec.IntersectsWith(wallRec))
+            {
+                if (direction == "left")
+                {
+                    direction = "right";
+                }
+                else if (direction == "right")
+                {
+                    direction = "left";
+                }
+                else if (direction == "up")
+                {
+                    direction = "down";
+                }
+                else
+                {
+                    direction = "up";
+                }
+            }
+
+            return wallRec.IntersectsWith(playerRec);
+        }
+
+        public bool BulletCollision(Bullet b)
+        {
+            Rectangle bulletRec = new Rectangle(b.x, b.y, b.size, b.size);
+            Rectangle playerRec = new Rectangle(x, y, width, height);
+
+            if (playerRec.IntersectsWith(bulletRec))
+            {
+                GameScreen.gremlinBullets.Remove(b);
+            }
+
+            return bulletRec.IntersectsWith(playerRec);
         }
     }
 }

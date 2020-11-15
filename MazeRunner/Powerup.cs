@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeRunner
 {
-    class Powerup
+    public class Powerup
     {
         public int x, y, width, height;
         string powerup;

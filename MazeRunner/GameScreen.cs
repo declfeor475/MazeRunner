@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Linq.Expressions;
 
 namespace MazeRunner
 {
@@ -26,21 +27,34 @@ namespace MazeRunner
         Player player;
 
         // player values
-        public static int playerLives;
-        public static int playerSpeed;
+        int playerLives;
+        int playerSpeed;
 
         // powerup values
         int powerPick;
 
+        // bullet values
+        int bulletSize = 10;
+        int xBulletSpeed = 15;
+        double yBulletSpeed = 15;
+        Boolean bulletRight, bulletUp;
+
         // lists
-        List<Bullet> bullets = new List<Bullet>();
+        public static List<Bullet> playerBullets = new List<Bullet>();
+        public static List<Bullet> gremlinBullets = new List<Bullet>();
         List<Gremlin> gremlins = new List<Gremlin>();
         List<Powerup> powerups = new List<Powerup>();
-        List<Wall> walls = new List<Wall>();
+        public static List<Wall> walls = new List<Wall>();
 
         // brushes
-        SolidBrush lifeUpBrush = new SolidBrush(Color.Green);
+        SolidBrush wallBrush = new SolidBrush(Color.LimeGreen);
+        SolidBrush pBulletBrush = new SolidBrush(Color.Blue);
+        SolidBrush gBulletBrush = new SolidBrush(Color.Red);
+        SolidBrush lifeUpBrush = new SolidBrush(Color.DarkGreen);
         SolidBrush fasterBrush = new SolidBrush(Color.Red);
+
+        // images
+        Image playerImage = Properties.Resources.player;
 
         // for random values
         Random randGen = new Random();
@@ -119,7 +133,36 @@ namespace MazeRunner
             reader.Close();
         }
 
-        private void GameScreen_KeyUp(object sender, KeyEventArgs e)
+        public void MakeBullet()
+        {
+            // create player bullet to go in the desired direction based on key press and add it to the list of player bullets
+            if (dKeyDown == true)
+            {
+                bulletRight = true;
+                Bullet newBullet = new Bullet(player.x, player.y, bulletSize, xBulletSpeed, bulletRight);
+                playerBullets.Add(newBullet);
+            }
+            else if (aKeyDown == true)
+            {
+                bulletRight = false;
+                Bullet newBullet = new Bullet(player.x, player.y, bulletSize, xBulletSpeed, bulletRight);
+                playerBullets.Add(newBullet);
+            }
+            else if (wKeyDown == true)
+            {
+                bulletUp = true;
+                Bullet newBullet = new Bullet(player.x, player.y, bulletSize, yBulletSpeed, bulletUp);
+                playerBullets.Add(newBullet);
+            }
+            else if (sKeyDown == true)
+            {
+                bulletUp = false;
+                Bullet newBullet = new Bullet(player.x, player.y, bulletSize, yBulletSpeed, bulletUp);
+                playerBullets.Add(newBullet);
+            }
+        }
+
+        private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -154,7 +197,7 @@ namespace MazeRunner
             }
         }
 
-        private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void GameScreen_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -191,10 +234,86 @@ namespace MazeRunner
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            //if (leftArrowDown && player.x > 0)
-            //{
+            #region player movement
+            
+            // move player in the direction of current arrow being pressed
+            if (leftArrowDown == true && player.x > 0)
+            {
+                player.Move(playerSpeed, "left");
+            }
+            if (rightArrowDown == true && player.x < this.Width)
+            {
+                player.Move(playerSpeed, "right");
+            }
+            if (upArrowDown == true && player.y > 0)
+            {
+                player.Move(playerSpeed, "up");
+            }
+            if (downArrowDown == true && player.y < (this.Height - player.width))
+            {
+                player.Move(playerSpeed, "down");
+            }
 
-            //}
+            #endregion
+
+            #region player bullet drawing and movement 
+
+            // see if a bullet should be made and call method to make the bullet 
+            if (wKeyDown == true || aKeyDown == true || sKeyDown == true || dKeyDown == true)
+            {
+                MakeBullet();
+            }
+
+            // move player bullets
+            foreach(Bullet b in playerBullets)
+            {
+                b.Move();
+            }
+
+            #endregion
+
+            #region player collisions
+
+            // check if player has collided with any bullets
+            foreach (Bullet b in gremlinBullets)
+            {
+                if (player.BulletCollision(b))
+                {
+                    // play collision sound
+                    playerLives--;
+
+                    if (playerLives == 0)
+                    {
+                        OnEnd();
+                    }
+                }
+            }
+
+            // *NOT WORKING* check if player has collided with any walls 
+            foreach (Wall w in walls)
+            {
+                if (player.WallCollision(w))
+                {
+                    if (leftArrowDown == true)
+                    {
+                        leftArrowDown = false;
+                    }
+                    else if (rightArrowDown == true)
+                    {
+                        rightArrowDown = false;
+                    }
+                    else if (upArrowDown == true)
+                    {
+                        upArrowDown = false;
+                    }
+                    else
+                    {
+                        downArrowDown = false;
+                    }
+                }
+            }
+
+            #endregion
 
             // redraw the screen
             Refresh();
@@ -202,7 +321,36 @@ namespace MazeRunner
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            // draws player image to screen
+            e.Graphics.DrawImage(playerImage, player.x, player.y, player.width, player.height);
 
+            // draws walls for the current level
+            foreach (Wall w in walls)
+            {
+                e.Graphics.FillRectangle(wallBrush, w.x, w.y, w.width, w.height);
+            }
+
+            foreach (Bullet b in playerBullets)
+            {
+                e.Graphics.FillEllipse(pBulletBrush, b.x, b.y, b.size, b.size);
+            }
+
+            //foreach (Bullet b in gremlinBullets)
+            //{
+            //    e.Graphics.FillEllipse(gBulletBrush, b.x, b.y, b.size, b.size);
+            //}
+        }
+
+        public void OnEnd()
+        {
+            // Goes to the game over screen
+            Form form = this.FindForm();
+            GameOverScreen go = new GameOverScreen();
+
+            go.Location = new Point((form.Width - go.Width) / 2, (form.Height - go.Height) / 2);
+
+            form.Controls.Add(go);
+            form.Controls.Remove(this);
         }
     }
 }

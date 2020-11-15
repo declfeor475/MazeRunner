@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MazeRunner
 {
-    class Wall
+    public class Wall
     {
         public int x, y, width, height;
         public Color colour;

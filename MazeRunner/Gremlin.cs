@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeRunner
 {
-    class Gremlin
+    public class Gremlin
     {
         public int x, y, health;
         string direction;
