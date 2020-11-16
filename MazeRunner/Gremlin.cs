@@ -8,35 +8,15 @@ namespace MazeRunner
 {
     public class Gremlin
     {
-        public int x, y, health;
-        string direction;
+        public int x, y, width, height, health;
 
-        public Gremlin(int _x, int _y, int _health, string _direction)
+        public Gremlin(int _x, int _y, int _width, int _height, int _health)
         {
             x = _x;
             y = _y;
+            width = _width;
+            height = _height;
             health = _health;
-            direction = _direction;
-        }
-
-        public void Shoot(string direction)
-        {
-            if (direction == "left")
-            {
-
-            }
-            if (direction == "right")
-            {
-
-            }
-            if (direction == "up")
-            {
-
-            }
-            if (direction == "down")
-            {
-
-            }
         }
     }
 }

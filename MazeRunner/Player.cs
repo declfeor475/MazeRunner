@@ -50,26 +50,6 @@ namespace MazeRunner
             Rectangle wallRec = new Rectangle(w.x, w.y, w.width, w.height);
             Rectangle playerRec = new Rectangle(x, y, width, height);
 
-            if (playerRec.IntersectsWith(wallRec))
-            {
-                if (direction == "left")
-                {
-                    direction = "right";
-                }
-                else if (direction == "right")
-                {
-                    direction = "left";
-                }
-                else if (direction == "up")
-                {
-                    direction = "down";
-                }
-                else
-                {
-                    direction = "up";
-                }
-            }
-
             return wallRec.IntersectsWith(playerRec);
         }
 
@@ -77,11 +57,6 @@ namespace MazeRunner
         {
             Rectangle bulletRec = new Rectangle(b.x, b.y, b.size, b.size);
             Rectangle playerRec = new Rectangle(x, y, width, height);
-
-            if (playerRec.IntersectsWith(bulletRec))
-            {
-                GameScreen.gremlinBullets.Remove(b);
-            }
 
             return bulletRec.IntersectsWith(playerRec);
         }

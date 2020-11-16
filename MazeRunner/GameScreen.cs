@@ -23,15 +23,9 @@ namespace MazeRunner
         // game values
         public static int level;
 
-        // player object
+        // player object and values
         Player player;
-
-        // player values
-        int playerLives;
-        int playerSpeed;
-
-        // powerup values
-        int powerPick;
+        int playerLives, playerSpeed;
 
         // bullet values
         int bulletSize = 10;
@@ -39,30 +33,38 @@ namespace MazeRunner
         double yBulletSpeed = 15;
         Boolean bulletRight, bulletUp;
 
+        // gremlin object and values
+        Gremlin gremlin;
+        int gremlinX, gremlinY, gremlinWidth, gremlinHeight, gremlinHealth;
+
         // lists
         public static List<Bullet> playerBullets = new List<Bullet>();
         public static List<Bullet> gremlinBullets = new List<Bullet>();
-        List<Gremlin> gremlins = new List<Gremlin>();
-        List<Powerup> powerups = new List<Powerup>();
+        public static List<Powerup> powerups = new List<Powerup>();
         public static List<Wall> walls = new List<Wall>();
 
         // brushes
         SolidBrush wallBrush = new SolidBrush(Color.LimeGreen);
         SolidBrush pBulletBrush = new SolidBrush(Color.Blue);
         SolidBrush gBulletBrush = new SolidBrush(Color.Red);
-        SolidBrush lifeUpBrush = new SolidBrush(Color.DarkGreen);
-        SolidBrush fasterBrush = new SolidBrush(Color.Red);
 
         // images
         Image playerImage = Properties.Resources.player;
+        Image gremlinImage = Properties.Resources.gremlin;
 
         // for random values
         Random randGen = new Random();
+
+        // counters 
+        int bulletCounter = 21;
+        int gremlinCounter = 0;
 
         public GameScreen()
         {
             InitializeComponent();
             OnStart(); // call onstart method
+            MakeGremlin(); // make gremlin for level
+            LevelMaker(); // make level
         }
 
         public void OnStart()
@@ -77,14 +79,12 @@ namespace MazeRunner
             leftArrowDown = rightArrowDown = upArrowDown = downArrowDown = wKeyDown = aKeyDown = sKeyDown = dKeyDown = false;
 
             // setup starting player values and create player
-            int playerWidth = 40;
-            int playerHeight = 60;
+            int playerWidth = 35;
+            int playerHeight = 50;
             int playerX = playerWidth;
             int playerY = ((this.Height / 2) - (playerHeight / 2));
             playerSpeed = 5;
             player = new Player(playerX, playerY, playerWidth, playerHeight, playerSpeed, playerLives);
-
-            LevelMaker();
         }
 
         public void LevelMaker()
@@ -133,32 +133,75 @@ namespace MazeRunner
             reader.Close();
         }
 
-        public void MakeBullet()
+        public void MakeGremlin()
+        {
+            if (level == 1)
+            {
+                gremlinWidth = 80;
+                gremlinHeight = 80;
+                gremlinX = 750;
+                gremlinY = 400;
+                gremlinHealth = 1;
+                gremlin = new Gremlin(gremlinX, gremlinY, gremlinWidth, gremlinHeight, gremlinHealth);
+            }
+        }
+
+        public void MakePlayerBullet()
         {
             // create player bullet to go in the desired direction based on key press and add it to the list of player bullets
-            if (dKeyDown == true)
+            if (rightArrowDown == true)
             {
                 bulletRight = true;
                 Bullet newBullet = new Bullet(player.x, player.y, bulletSize, xBulletSpeed, bulletRight);
                 playerBullets.Add(newBullet);
             }
-            else if (aKeyDown == true)
+            else if (leftArrowDown == true)
             {
                 bulletRight = false;
                 Bullet newBullet = new Bullet(player.x, player.y, bulletSize, xBulletSpeed, bulletRight);
                 playerBullets.Add(newBullet);
             }
-            else if (wKeyDown == true)
+            else if (upArrowDown == true)
             {
                 bulletUp = true;
                 Bullet newBullet = new Bullet(player.x, player.y, bulletSize, yBulletSpeed, bulletUp);
                 playerBullets.Add(newBullet);
             }
-            else if (sKeyDown == true)
+            else if (downArrowDown == true)
             {
                 bulletUp = false;
                 Bullet newBullet = new Bullet(player.x, player.y, bulletSize, yBulletSpeed, bulletUp);
                 playerBullets.Add(newBullet);
+            }
+        }
+
+        public void MakeGremlinBullet()
+        {
+            int direction = randGen.Next(1, 5);
+
+            if (direction == 1)
+            {
+                bulletRight = true;
+                Bullet newBullet = new Bullet(gremlin.x, gremlin.y, bulletSize, xBulletSpeed, bulletRight);
+                gremlinBullets.Add(newBullet);
+            }
+            else if (direction == 2)
+            {
+                bulletRight = false;
+                Bullet newBullet = new Bullet(gremlin.x, gremlin.y, bulletSize, xBulletSpeed, bulletRight);
+                gremlinBullets.Add(newBullet);
+            }
+            else if (direction == 3)
+            {
+                bulletUp = true;
+                Bullet newBullet = new Bullet(gremlin.x, gremlin.y, bulletSize, yBulletSpeed, bulletUp);
+                gremlinBullets.Add(newBullet);
+            }
+            else if (direction == 4)
+            {
+                bulletUp = false;
+                Bullet newBullet = new Bullet(gremlin.x, gremlin.y, bulletSize, yBulletSpeed, bulletUp);
+                gremlinBullets.Add(newBullet);
             }
         }
 
@@ -234,22 +277,30 @@ namespace MazeRunner
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            // current player x and y positions
+            int x = player.x;
+            int y = player.y;
+
+            // counters
+            bulletCounter++;
+            gremlinCounter++;
+
             #region player movement
-            
+
             // move player in the direction of current arrow being pressed
-            if (leftArrowDown == true && player.x > 0)
+            if (aKeyDown == true && player.x > 15)
             {
                 player.Move(playerSpeed, "left");
             }
-            if (rightArrowDown == true && player.x < this.Width)
+            if (dKeyDown == true)
             {
                 player.Move(playerSpeed, "right");
             }
-            if (upArrowDown == true && player.y > 0)
+            if (wKeyDown == true && player.y > 0)
             {
                 player.Move(playerSpeed, "up");
             }
-            if (downArrowDown == true && player.y < (this.Height - player.width))
+            if (sKeyDown == true && player.y < (this.Height - player.height + 25))
             {
                 player.Move(playerSpeed, "down");
             }
@@ -259,9 +310,10 @@ namespace MazeRunner
             #region player bullet drawing and movement 
 
             // see if a bullet should be made and call method to make the bullet 
-            if (wKeyDown == true || aKeyDown == true || sKeyDown == true || dKeyDown == true)
+            if (bulletCounter > 10 && upArrowDown == true || bulletCounter > 10 && leftArrowDown == true || bulletCounter > 10 && downArrowDown == true || bulletCounter > 10 && rightArrowDown == true)
             {
-                MakeBullet();
+                bulletCounter = 0;
+                MakePlayerBullet();
             }
 
             // move player bullets
@@ -274,43 +326,67 @@ namespace MazeRunner
 
             #region player collisions
 
-            // check if player has collided with any bullets
-            foreach (Bullet b in gremlinBullets)
-            {
-                if (player.BulletCollision(b))
-                {
-                    // play collision sound
-                    playerLives--;
-
-                    if (playerLives == 0)
-                    {
-                        OnEnd();
-                    }
-                }
-            }
-
-            // *NOT WORKING* check if player has collided with any walls 
+            // check if player has collided with any walls 
             foreach (Wall w in walls)
             {
                 if (player.WallCollision(w))
                 {
-                    if (leftArrowDown == true)
-                    {
-                        leftArrowDown = false;
-                    }
-                    else if (rightArrowDown == true)
-                    {
-                        rightArrowDown = false;
-                    }
-                    else if (upArrowDown == true)
-                    {
-                        upArrowDown = false;
-                    }
-                    else
-                    {
-                        downArrowDown = false;
-                    }
+                    player.x = x;
+                    player.y = y;
+                    break;
                 }
+            }
+
+            // check if player has collided with any bullets
+            if (gremlinBullets.Count > 0)
+            {
+                foreach (Bullet b in gremlinBullets)
+                {
+                    if (player.BulletCollision(b))
+                    {
+                        // play collision sound
+                        playerLives--;
+                        gremlinBullets.Remove(b);
+
+                        if (playerLives == 0)
+                        {
+                            OnEnd();
+                        }                       
+                    }
+                    break;
+                }
+            }
+
+            #endregion
+
+            #region gremlin bullet drawing and movement
+
+            // see if the gremlin should fire a bullet
+            if (gremlinCounter > 10)
+            {
+                gremlinCounter = 0;
+                MakeGremlinBullet();
+            }
+
+            // move player bullets
+            foreach (Bullet b in gremlinBullets)
+            {
+                b.Move();
+            }
+
+            #endregion
+
+            #region beat level
+
+            if (player.x > this.Width - player.width && level < 5)
+            {
+                level++;
+                LevelMaker(); // make next level
+            }
+            else if (player.x > this.Width - player.width && level == 5)
+            {
+                gameTimer.Enabled = false;
+                OnEnd();
             }
 
             #endregion
@@ -323,6 +399,9 @@ namespace MazeRunner
         {
             // draws player image to screen
             e.Graphics.DrawImage(playerImage, player.x, player.y, player.width, player.height);
+            
+            // draws gremlin image to screen
+            e.Graphics.DrawImage(gremlinImage, gremlin.x, gremlin.y, gremlin.width, gremlin.height);         
 
             // draws walls for the current level
             foreach (Wall w in walls)
@@ -335,10 +414,10 @@ namespace MazeRunner
                 e.Graphics.FillEllipse(pBulletBrush, b.x, b.y, b.size, b.size);
             }
 
-            //foreach (Bullet b in gremlinBullets)
-            //{
-            //    e.Graphics.FillEllipse(gBulletBrush, b.x, b.y, b.size, b.size);
-            //}
+            foreach (Bullet b in gremlinBullets)
+            {
+                e.Graphics.FillEllipse(gBulletBrush, b.x, b.y, b.size, b.size);
+            }
         }
 
         public void OnEnd()
