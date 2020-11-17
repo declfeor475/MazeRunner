@@ -116,8 +116,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\WinScreen.png" />
+    <None Include="Resources\MenuScreen.png" />
     <None Include="Resources\Collision.wav" />
     <None Include="Resources\gremlinHit.wav" />
+    <None Include="Resources\DeathScreen.png" />
     <Content Include="Resources\level1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

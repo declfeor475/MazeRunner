@@ -18,6 +18,8 @@ namespace MazeRunner
     {
         #region public variables, objects, lists, brushes, and resources 
 
+        public static Boolean win; // for determining game over screen background
+
         // player control keys
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown;
 
@@ -82,6 +84,10 @@ namespace MazeRunner
             // set player life counter
             playerLives = 3;
 
+            // display current level and player health to labels
+            levelLabel.Text = "Level: " + level;
+            healthLabel.Text = "Lives: " + playerLives;
+
             // set all button presses to false
             leftArrowDown = rightArrowDown = upArrowDown = downArrowDown = wKeyDown = aKeyDown = sKeyDown = dKeyDown = false;
 
@@ -90,8 +96,11 @@ namespace MazeRunner
             int playerHeight = 50;
             int playerX = 0;
             int playerY = ((this.Height / 2) - (playerHeight / 2));
-            playerSpeed = 5;
+            playerSpeed = 5;            
             player = new Player(playerX, playerY, playerWidth, playerHeight, playerSpeed, playerLives);
+
+            // start the game engine loop
+            gameTimer.Enabled = true;
         }
 
         public void LevelMaker()
@@ -388,8 +397,8 @@ namespace MazeRunner
                     if (g.BulletCollision(b))
                     {
                         gremlinSound.Play();
-                        gremlinHit = true;
                         g.health--;
+                        gremlinHit = true;
 
                         //checks to ensure that the bullet is not already in removal list 
                         if (!bulletsToRemove.Contains(playerBullets.IndexOf(b)))
@@ -545,13 +554,16 @@ namespace MazeRunner
             {
                 if (player.BulletCollision(b))
                 {
-                    playerSound.Play();
-                    playerHit = true;
+                    playerSound.Play();                 
                     playerLives--;
+                    healthLabel.Text = "Lives: " + playerLives;
                     gremlinBullets.Remove(b);
+                    playerHit = true;
 
-                    if (playerLives == 0)
+                    if (playerLives == 0) // go the game over screen if player dies
                     {
+                        win = false;
+                        gameTimer.Enabled = false;
                         Thread.Sleep(2000);
                         OnEnd();
                     }
@@ -615,7 +627,9 @@ namespace MazeRunner
             // check if player has reached the end of the level
             if (player.x > this.Width - player.width && level < 5)
             {
-                level++; // go to next level
+                // go to next level and change label
+                level++;
+                levelLabel.Text = "Level: " + level;
 
                 // player starting position
                 player.x = 35;
@@ -633,6 +647,7 @@ namespace MazeRunner
             else if (player.x > this.Width - player.width && level == 5) // if player was on final level
             {
                 gameTimer.Enabled = false;
+                win = true;
                 OnEnd(); // go to game over screen
             }
 
@@ -699,6 +714,12 @@ namespace MazeRunner
 
         public void OnEnd()
         {
+            // clear bullets, gremlins and walls still on screen from previous level
+            gremlins.Clear();
+            playerBullets.Clear();
+            gremlinBullets.Clear();
+            walls.Clear();
+
             // Goes to the game over screen
             Form form = this.FindForm();
             GameOverScreen go = new GameOverScreen();
@@ -710,4 +731,3 @@ namespace MazeRunner
         }
     }
 }
-

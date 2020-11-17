@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="DeathScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeathScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gremlin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Gremlin.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,10 +133,16 @@
   <data name="level2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\level2.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="MenuScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MenuScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\player.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="playerHit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Collision.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WinScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WinScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

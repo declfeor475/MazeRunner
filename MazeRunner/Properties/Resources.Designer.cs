@@ -63,6 +63,16 @@ namespace MazeRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DeathScreen {
+            get {
+                object obj = ResourceManager.GetObject("DeathScreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gremlin {
             get {
                 object obj = ResourceManager.GetObject("gremlin", resourceCulture);
@@ -166,6 +176,16 @@ namespace MazeRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MenuScreen {
+            get {
+                object obj = ResourceManager.GetObject("MenuScreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap player {
             get {
                 object obj = ResourceManager.GetObject("player", resourceCulture);
@@ -179,6 +199,16 @@ namespace MazeRunner.Properties {
         internal static System.IO.UnmanagedMemoryStream playerHit {
             get {
                 return ResourceManager.GetStream("playerHit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WinScreen {
+            get {
+                object obj = ResourceManager.GetObject("WinScreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
