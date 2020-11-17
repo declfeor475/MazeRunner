@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace MazeRunner
 {
     public class Wall
     {
+        // wall variables
         public int x, y, width, height;
         public Color colour;
 
@@ -22,10 +18,11 @@ namespace MazeRunner
 
         public bool BulletCollision(Bullet b)
         {
+            // create rectangle for bullet and wall
             Rectangle bulletRec = new Rectangle(b.x, b.y, b.size, b.size);
             Rectangle wallRec = new Rectangle(x, y, width, height);
 
-            return bulletRec.IntersectsWith(wallRec);
+            return bulletRec.IntersectsWith(wallRec); // true if collided, false if not
         }
     }
 }

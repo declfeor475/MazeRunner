@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿/// Created by Declan Feore and James Koch
+/// November 2020
+/// A simple dungeon crawler game where the player has to navigate through the levels and take out any gremlins along their way to victory
+
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MazeRunner
