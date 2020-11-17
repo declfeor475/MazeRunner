@@ -314,7 +314,32 @@ namespace MazeRunner
 
         public void GremlinBulletsWallsCollision()
         {
+            //will contain index values of all bullets that have collided with a wall 
+            List<int> bulletsToRemove = new List<int>();
 
+            foreach (Bullet b in gremlinBullets)
+            {
+                foreach (Wall w in walls)
+                {
+                    //uses collision method in wall class 
+                    if (w.BulletCollision(b))
+                    {
+                        //checks to ensure that the bullet is not already in removal list 
+                        if (!bulletsToRemove.Contains(gremlinBullets.IndexOf(b)))
+                        {
+                            //add the index value from bullets of the bullet that collided  
+                            bulletsToRemove.Add(gremlinBullets.IndexOf(b));
+                        }
+                    }
+                }
+            }
+            //reverse list so when removing you do so from the end of the list first 
+            bulletsToRemove.Reverse();
+
+            foreach (int i in bulletsToRemove)
+            {
+                gremlinBullets.RemoveAt(i);
+            }
         }
 
         public void PlayerBulletsWallsCollision()
@@ -362,6 +387,10 @@ namespace MazeRunner
                     //uses collision method in gremlin class 
                     if (g.BulletCollision(b))
                     {
+                        gremlinSound.Play();
+                        gremlinHit = true;
+                        g.health--;
+
                         //checks to ensure that the bullet is not already in removal list 
                         if (!bulletsToRemove.Contains(playerBullets.IndexOf(b)))
                         {
@@ -373,7 +402,10 @@ namespace MazeRunner
                         if (!gremlinsToRemove.Contains(gremlins.IndexOf(g)))
                         {
                             //add index value from gremlins of the gremlin that collided 
-                            gremlinsToRemove.Add(gremlins.IndexOf(g));
+                            if (g.health == 0)
+                            {
+                                gremlinsToRemove.Add(gremlins.IndexOf(g));
+                            }
                         }
                     }
                 }
@@ -389,8 +421,6 @@ namespace MazeRunner
 
             foreach (int i in gremlinsToRemove)
             {
-                gremlinSound.Play();
-                gremlinHit = true;
                 gremlins.RemoveAt(i);
             }
         }
@@ -626,7 +656,10 @@ namespace MazeRunner
             // player getting hit animation
             if (playerHit == true)
             {
-                e.Graphics.FillRectangle(pHitBrush, player.x, player.y, player.width, player.height);
+                for (int i = 0; i < 2; i++)
+                { 
+                    e.Graphics.FillRectangle(pHitBrush, player.x, player.y, player.width, player.height);
+                }
 
                 playerHit = false;
             }
@@ -642,7 +675,10 @@ namespace MazeRunner
                 // gremlin getting hit animation
                 if (gremlinHit == true)
                 {
-                    e.Graphics.FillRectangle(gHitBrush, g.x, g.y, g.width, g.height);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        e.Graphics.FillRectangle(gHitBrush, g.x, g.y, g.width, g.height);
+                    }
 
                     gremlinHit = false;
                 }

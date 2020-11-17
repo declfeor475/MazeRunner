@@ -20,7 +20,7 @@ namespace MazeRunner
             height = _height;
         }
 
-        public void BulletCollision(Bullet b)
+        public bool BulletCollision(Bullet b)
         {
             Rectangle bulletRec = new Rectangle(b.x, b.y, b.size, b.size);
             Rectangle wallRec = new Rectangle(x, y, width, height);
