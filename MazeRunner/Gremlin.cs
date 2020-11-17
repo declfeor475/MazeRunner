@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,14 @@ namespace MazeRunner
             width = _width;
             height = _height;
             health = _health;
+        }
+
+        public bool BulletCollision(Bullet b)
+        {
+            Rectangle bulletRec = new Rectangle(b.x, b.y, b.size, b.size);
+            Rectangle gremlinRec = new Rectangle(x, y, width, height);
+
+            return bulletRec.IntersectsWith(gremlinRec);
         }
     }
 }

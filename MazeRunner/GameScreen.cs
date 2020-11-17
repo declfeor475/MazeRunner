@@ -9,19 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace MazeRunner
 {
     public partial class GameScreen : UserControl
     {
+        #region public variables, objects, lists, brushes, and resources 
+
         // player control keys
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown;
 
         // shooting control keys
         Boolean wKeyDown, aKeyDown, sKeyDown, dKeyDown;
 
-        // game values
-        public static int level;
+        public static int level; // level variable
 
         // player object and values
         Player player;
@@ -37,27 +39,27 @@ namespace MazeRunner
         Gremlin gremlin;
         int gremlinX, gremlinY, gremlinWidth, gremlinHeight, gremlinHealth;
 
-        // lists
-        public static List<Bullet> playerBullets = new List<Bullet>();
-        public static List<Bullet> gremlinBullets = new List<Bullet>();
-        public static List<Powerup> powerups = new List<Powerup>();
-        public static List<Wall> walls = new List<Wall>();
+        public static List<Bullet> playerBullets = new List<Bullet>(); // player bullets list
+        public static List<Bullet> gremlinBullets = new List<Bullet>(); // gremlin bullets list
+        public static List<Wall> walls = new List<Wall>(); // wall list
 
-        // brushes
-        SolidBrush wallBrush = new SolidBrush(Color.LimeGreen);
-        SolidBrush pBulletBrush = new SolidBrush(Color.Blue);
-        SolidBrush gBulletBrush = new SolidBrush(Color.Red);
+        SolidBrush wallBrush = new SolidBrush(Color.LimeGreen); // wall brush
+        SolidBrush pBulletBrush = new SolidBrush(Color.Blue); // player bullets brush
+        SolidBrush gBulletBrush = new SolidBrush(Color.Red); // gremlin bullets brush
+        SolidBrush pHitBrush = new SolidBrush(Color.DarkRed); // player hit brush
+        SolidBrush gHitBrush = new SolidBrush(Color.LightBlue); // gremlin hit brush
 
-        // images
-        Image playerImage = Properties.Resources.player;
-        Image gremlinImage = Properties.Resources.gremlin;
+        Boolean playerHit, gremlinHit; // player and gremlin hit 
 
-        // for random values
-        Random randGen = new Random();
+        Image playerImage = Properties.Resources.player; // player image
+        Image gremlinImage = Properties.Resources.gremlin; // gremlin image
 
-        // counters 
-        int bulletCounter = 21;
-        int gremlinCounter = 0;
+        Random randGen = new Random(); // for random values
+
+        int bulletCounter = 21; // player bullet cooldown timer
+        int gremlinCounter = 0; // gremlin bullet cooldown timer
+
+        #endregion
 
         public GameScreen()
         {
@@ -307,23 +309,6 @@ namespace MazeRunner
 
             #endregion
 
-            #region player bullet drawing and movement 
-
-            // see if a bullet should be made and call method to make the bullet 
-            if (bulletCounter > 10 && upArrowDown == true || bulletCounter > 10 && leftArrowDown == true || bulletCounter > 10 && downArrowDown == true || bulletCounter > 10 && rightArrowDown == true)
-            {
-                bulletCounter = 0;
-                MakePlayerBullet();
-            }
-
-            // move player bullets
-            foreach(Bullet b in playerBullets)
-            {
-                b.Move();
-            }
-
-            #endregion
-
             #region player collisions
 
             // check if player has collided with any walls 
@@ -338,21 +323,54 @@ namespace MazeRunner
             }
 
             // check if player has collided with any bullets
-            if (gremlinBullets.Count > 0)
+            foreach (Bullet b in gremlinBullets)
             {
-                foreach (Bullet b in gremlinBullets)
+                if (player.BulletCollision(b))
                 {
-                    if (player.BulletCollision(b))
-                    {
-                        // play collision sound
-                        playerLives--;
-                        gremlinBullets.Remove(b);
+                    // play collision sound
+                    playerHit = true;
+                    playerLives--;
+                    gremlinBullets.Remove(b);
 
-                        if (playerLives == 0)
-                        {
-                            OnEnd();
-                        }                       
+                    if (playerLives == 0)
+                    {
+                        Thread.Sleep(2000);
+                        OnEnd();
                     }
+                    break;
+                }
+            }
+
+            #endregion
+
+            #region player bullet drawing and movement 
+
+            // see if a bullet should be made and call method to make the bullet 
+            if (bulletCounter > 10 && upArrowDown == true || bulletCounter > 10 && leftArrowDown == true || bulletCounter > 10 && downArrowDown == true || bulletCounter > 10 && rightArrowDown == true)
+            {
+                bulletCounter = 0;
+                MakePlayerBullet();
+            }
+
+            // move player bullets
+            foreach (Bullet b in playerBullets)
+            {
+                b.Move();
+            }
+
+            #endregion
+
+            #region gremlin collisions
+
+            // check if gremlin has been hit by any player bullets
+            foreach (Bullet b in playerBullets)
+            {
+                if (gremlin.BulletCollision(b))
+                {
+                    // play collision sound
+                    gremlinHit = true;
+                    gremlinHealth--;
+                    playerBullets.Remove(b);
                     break;
                 }
             }
@@ -368,25 +386,46 @@ namespace MazeRunner
                 MakeGremlinBullet();
             }
 
-            // move player bullets
+            // move gremlin bullets
             foreach (Bullet b in gremlinBullets)
             {
                 b.Move();
             }
 
+            // do not fire any more gremlin bullets once gremlin has no health left
+            if (gremlinHealth == 0)
+            {
+                gremlinCounter--;
+            }
+
+            #endregion
+
+            #region bullet to wall collisions
+
             #endregion
 
             #region beat level
 
+            // check if player has reached the end of the level
             if (player.x > this.Width - player.width && level < 5)
             {
-                level++;
+                level++; // go to next level
+
+                // player starting position
+                player.x = 35;
+                player.y = (this.Height / 2) - 25;
+
+                // clear bullets and walls still on screen from previous level
+                playerBullets.Clear();
+                gremlinBullets.Clear();
+                walls.Clear();
+
                 LevelMaker(); // make next level
             }
-            else if (player.x > this.Width - player.width && level == 5)
+            else if (player.x > this.Width - player.width && level == 5) // if player was on final level
             {
                 gameTimer.Enabled = false;
-                OnEnd();
+                OnEnd(); // go to game over screen
             }
 
             #endregion
@@ -399,9 +438,12 @@ namespace MazeRunner
         {
             // draws player image to screen
             e.Graphics.DrawImage(playerImage, player.x, player.y, player.width, player.height);
-            
+
             // draws gremlin image to screen
-            e.Graphics.DrawImage(gremlinImage, gremlin.x, gremlin.y, gremlin.width, gremlin.height);         
+            if (gremlinHealth > 0)
+            {
+                e.Graphics.DrawImage(gremlinImage, gremlin.x, gremlin.y, gremlin.width, gremlin.height);
+            }
 
             // draws walls for the current level
             foreach (Wall w in walls)
@@ -409,15 +451,44 @@ namespace MazeRunner
                 e.Graphics.FillRectangle(wallBrush, w.x, w.y, w.width, w.height);
             }
 
+            // draws player fired bullets 
             foreach (Bullet b in playerBullets)
             {
                 e.Graphics.FillEllipse(pBulletBrush, b.x, b.y, b.size, b.size);
             }
 
+            // draws gremlin fired bullets
             foreach (Bullet b in gremlinBullets)
             {
                 e.Graphics.FillEllipse(gBulletBrush, b.x, b.y, b.size, b.size);
             }
+
+            // player getting hit animation
+            if (playerHit == true)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    e.Graphics.FillRectangle(pHitBrush, player.x, player.y, player.width, player.height);
+                }
+
+                playerHit = false;
+            }
+
+            // gremlin getting hit animation
+            if (gremlinHit == true)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    e.Graphics.FillRectangle(gHitBrush, gremlin.x, gremlin.y, gremlin.width, gremlin.height);
+                }
+
+                gremlinHit = false;
+            }
+        }
+
+        public void HitAnimation()
+        {
+
         }
 
         public void OnEnd()
