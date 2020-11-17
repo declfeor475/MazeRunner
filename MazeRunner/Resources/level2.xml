@@ -1,117 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <level>
 	<wall>
-		<x>3</x>
+		<x>0</x>
 		<y>0</y>
-		<width>744</width>
-		<height>28</height>
+		<width>1000</width>
+		<height>20</height>
 	</wall>
 	<wall>
 		<x>0</x>
-		<y>270</y>
-		<width>39</width>
-		<height>108</height>
+		<y>0</y>
+		<width>20</width>
+		<height>200</height>
 	</wall>
 	<wall>
 		<x>0</x>
-		<y>378</y>
-		<width>744</width>
-		<height>28</height>
+		<y>300</y>
+		<width>20</width>
+		<height>200</height>
 	</wall>
 	<wall>
-		<x>711</x>
-		<y>270</y>
-		<width>39</width>
-		<height>136</height>
+		<x>0</x>
+		<y>480</y>
+		<width>1000</width>
+		<height>20</height>
 	</wall>
 	<wall>
-		<x>711</x>
+		<x>100</x>
+		<y>100</y>
+		<width>150</width>
+		<height>15</height>
+	</wall>
+	<wall>
+		<x>100</x>
+		<y>100</y>
+		<width>15</width>
+		<height>300</height>
+	</wall>
+	<wall>
+		<x>100</x>
+		<y>400</y>
+		<width>150</width>
+		<height>15</height>
+	</wall>
+	<wall>
+		<x>200</x>
+		<y>200</y>
+		<width>150</width>
+		<height>15</height>
+	</wall>
+	<wall>
+		<x>200</x>
+		<y>300</y>
+		<width>150</width>
+		<height>15</height>
+	</wall>
+	<wall>
+		<x>350</x>
 		<y>0</y>
-		<width>39</width>
-		<height>136</height>
+		<width>15</width>
+		<height>215</height>
 	</wall>
 	<wall>
-		<x>130</x>
-		<y>129</y>
-		<width>140</width>
-		<height>13</height>
-	</wall>
-	<wall>
-		<x>130</x>
-		<y>142</y>
-		<width>13</width>
-		<height>140</height>
-	</wall>
-	<wall>
-		<x>235</x>
-		<y>311</y>
-		<width>140</width>
-		<height>13</height>
-	</wall>
-	<wall>
-		<x>235</x>
-		<y>218</y>
-		<width>140</width>
-		<height>13</height>
-	</wall>
-	<wall>
-		<x>372</x>
-		<y>95</y>
-		<width>140</width>
-		<height>13</height>
-	</wall>
-	<wall>
-		<x>488</x>
-		<y>242</y>
-		<width>13</width>
-		<height>140</height>
-	</wall>
-
-	<x>130</x>
-	<y>73</y>
-	<width>140</width>
-	<height>13</height>
-	<wall>
-		<x>544</x>
-		<y>93</y>
-		<width>13</width>
-		<height>140</height>
-	</wall>
-	<wall>
-		<x>544</x>
-		<y>109</y>
-		<width>74</width>
-		<height>13</height>
-	</wall>
-	<wall>
-		<x>452</x>
-		<y>229</y>
-		<width>140</width>
-		<height>13</height>
+		<x>350</x>
+		<y>300</y>
+		<width>15</width>
+		<height>120</height>
 	</wall>
 	<wall>
 		<x>500</x>
-		<y>242</y>
-		<width>13</width>
-		<height>140</height>
+		<y>100</y>
+		<width>15</width>
+		<height>300</height>
 	</wall>
 	<wall>
-		<x>518</x>
-		<y>295</y>
-		<width>140</width>
-		<height>13</height>
+		<x>500</x>
+		<y>100</y>
+		<width>300</width>
+		<height>15</height>
 	</wall>
 	<wall>
-		<x>518</x>
-		<y>342</y>
-		<width>140</width>
-		<height>13</height>
+		<x>500</x>
+		<y>400</y>
+		<width>300</width>
+		<height>15</height>
 	</wall>
 	<wall>
-		<x>655</x>
-		<y>242</y>
-		<width>13</width>
-		<height>140</height>
+		<x>980</x>
+		<y>0</y>
+		<width>20</width>
+		<height>200</height>
+	</wall>
+	<wall>
+		<x>980</x>
+		<y>300</y>
+		<width>20</width>
+		<height>200</height>
+	</wall>
+	<wall>
+		<x>700</x>
+		<y>200</y>
+		<width>300</width>
+		<height>15</height>
+	</wall>
+	<wall>
+		<x>700</x>
+		<y>300</y>
+		<width>300</width>
+		<height>15</height>
 	</wall>
 </level >
 

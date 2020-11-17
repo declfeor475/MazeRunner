@@ -121,6 +121,9 @@
   <data name="gremlin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Gremlin.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gremlinHit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gremlinHit.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="level1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\level1.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -129,5 +132,8 @@
   </data>
   <data name="player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\player.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playerHit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Collision.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

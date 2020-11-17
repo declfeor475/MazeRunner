@@ -116,6 +116,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Collision.wav" />
+    <None Include="Resources\gremlinHit.wav" />
     <Content Include="Resources\level1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -132,7 +134,9 @@
     <None Include="Resources\gremlin.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\level3.xml" />
+    <Content Include="Resources\level3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\level4.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -71,37 +71,46 @@ namespace MazeRunner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream gremlinHit {
+            get {
+                return ResourceManager.GetStream("gremlinHit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;level&gt;
         ///	&lt;wall&gt;
-        ///		&lt;x&gt;3&lt;/x&gt;
+        ///		&lt;x&gt;0&lt;/x&gt;
         ///		&lt;y&gt;0&lt;/y&gt;
-        ///		&lt;width&gt;744&lt;/width&gt;
-        ///		&lt;height&gt;28&lt;/height&gt;
+        ///		&lt;width&gt;1000&lt;/width&gt;
+        ///		&lt;height&gt;25&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
         ///		&lt;x&gt;0&lt;/x&gt;
-        ///		&lt;y&gt;270&lt;/y&gt;
-        ///		&lt;width&gt;39&lt;/width&gt;
-        ///		&lt;height&gt;108&lt;/height&gt;
+        ///		&lt;y&gt;0&lt;/y&gt;
+        ///		&lt;width&gt;20&lt;/width&gt;
+        ///		&lt;height&gt;200&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
         ///		&lt;x&gt;0&lt;/x&gt;
-        ///		&lt;y&gt;378&lt;/y&gt;
-        ///		&lt;width&gt;744&lt;/width&gt;
-        ///		&lt;height&gt;28&lt;/height&gt;
+        ///		&lt;y&gt;300&lt;/y&gt;
+        ///		&lt;width&gt;20&lt;/width&gt;
+        ///		&lt;height&gt;200&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
-        ///		&lt;x&gt;711&lt;/x&gt;
-        ///		&lt;y&gt;270&lt;/y&gt;
-        ///		&lt;width&gt;39&lt;/width&gt;
-        ///		&lt;height&gt;136&lt;/height&gt;
+        ///		&lt;x&gt;0&lt;/x&gt;
+        ///		&lt;y&gt;480&lt;/y&gt;
+        ///		&lt;width&gt;1000&lt;/width&gt;
+        ///		&lt;height&gt;20&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
-        ///		&lt;x&gt;711&lt;/x&gt;
-        ///		&lt;y&gt;0&lt;/y&gt;
-        ///		&lt;width&gt;39&lt;/width&gt;
-        ///		&lt;height&gt;136&lt;/height&gt;
+        ///		&lt;x&gt;100&lt;/x&gt;
+        ///		&lt;y&gt;100&lt;/y&gt;
+        ///		&lt;width&gt;20&lt;/width&gt;
+        ///		&lt;height&gt;200&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
         ///		&lt;x [rest of string was truncated]&quot;;.
@@ -116,34 +125,34 @@ namespace MazeRunner.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;level&gt;
         ///	&lt;wall&gt;
-        ///		&lt;x&gt;3&lt;/x&gt;
+        ///		&lt;x&gt;0&lt;/x&gt;
         ///		&lt;y&gt;0&lt;/y&gt;
-        ///		&lt;width&gt;744&lt;/width&gt;
-        ///		&lt;height&gt;28&lt;/height&gt;
+        ///		&lt;width&gt;1000&lt;/width&gt;
+        ///		&lt;height&gt;20&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
         ///		&lt;x&gt;0&lt;/x&gt;
-        ///		&lt;y&gt;270&lt;/y&gt;
-        ///		&lt;width&gt;39&lt;/width&gt;
-        ///		&lt;height&gt;108&lt;/height&gt;
+        ///		&lt;y&gt;0&lt;/y&gt;
+        ///		&lt;width&gt;20&lt;/width&gt;
+        ///		&lt;height&gt;200&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
         ///		&lt;x&gt;0&lt;/x&gt;
-        ///		&lt;y&gt;378&lt;/y&gt;
-        ///		&lt;width&gt;744&lt;/width&gt;
-        ///		&lt;height&gt;28&lt;/height&gt;
+        ///		&lt;y&gt;300&lt;/y&gt;
+        ///		&lt;width&gt;20&lt;/width&gt;
+        ///		&lt;height&gt;200&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
-        ///		&lt;x&gt;711&lt;/x&gt;
-        ///		&lt;y&gt;270&lt;/y&gt;
-        ///		&lt;width&gt;39&lt;/width&gt;
-        ///		&lt;height&gt;136&lt;/height&gt;
+        ///		&lt;x&gt;0&lt;/x&gt;
+        ///		&lt;y&gt;480&lt;/y&gt;
+        ///		&lt;width&gt;1000&lt;/width&gt;
+        ///		&lt;height&gt;20&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
-        ///		&lt;x&gt;711&lt;/x&gt;
-        ///		&lt;y&gt;0&lt;/y&gt;
-        ///		&lt;width&gt;39&lt;/width&gt;
-        ///		&lt;height&gt;136&lt;/height&gt;
+        ///		&lt;x&gt;100&lt;/x&gt;
+        ///		&lt;y&gt;100&lt;/y&gt;
+        ///		&lt;width&gt;150&lt;/width&gt;
+        ///		&lt;height&gt;15&lt;/height&gt;
         ///	&lt;/wall&gt;
         ///	&lt;wall&gt;
         ///		&lt;x [rest of string was truncated]&quot;;.
@@ -161,6 +170,15 @@ namespace MazeRunner.Properties {
             get {
                 object obj = ResourceManager.GetObject("player", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream playerHit {
+            get {
+                return ResourceManager.GetStream("playerHit", resourceCulture);
             }
         }
     }

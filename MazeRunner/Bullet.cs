@@ -53,13 +53,5 @@ namespace MazeRunner
                 y += Convert.ToInt16(ySpeed);
             }
         }
-
-        public void WallCollision(Wall w)
-        {
-            Rectangle wallRec = new Rectangle(w.x, w.y, w.width, w.height);
-            Rectangle bulletRec = new Rectangle(x, y, size, size);
-
-            //return (wallRec.IntersectsWith(bulletRec));
-        }
     }
 }
